@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>My Daily Mood</title>
+
+  <script>
+    let moodLogs = []
+
+    let currentMood = ""
+    function onMoodClicked(mood) {
+      currentMood = mood
+    }
+
+    function getMoodColor(mood) {
+      if (mood === 'good') {
+        return 'green'
+      } else if (mood === 'neutral') {
+        return 'orange'
+      } else {
+        return 'red'
+      }
+    }
+
+    function renderMoodCell(mood, description) {
+      const moodColor = getMoodColor(mood)
+      const moodsSection = document.getElementById('moods-section')
+      moodsSection.innerHTML = ''
+
+      let cell = document.createElement('div')
+      cell.style.display = 'inline-block'
+      cell.style.width = '20px'
+      cell.style.height = '20px'
+      cell.style.margin = '0 2px'
+      cell.style.backgroundColor = moodColor
+
+      moodsSection.appendChild(cell)
+
+      const descriptionLabel = document.getElementById('description-label')
+      descriptionLabel.innerHTML = descriptionLabel
+    }
+
+    function onLogMoodClicked() {
+      const descriptionValue = document.getElementById('description').value
+      moodLogs.push({mood: currentMood, description: descriptionValue})
+      renderMoodCell(currentMood, descriptionValue)
+
+      const descriptionLabel = document.getElementById('description-label')
+      descriptionLabel.innerHTML = descriptionValue
+    }
+  </script>
+</head>
+
+<body style="padding: 20px;">
+  <h1>My Daily Mood</h1>
+  <h2>What's your mood today?</h2>
+
+  <div>
+    <button onclick="onMoodClicked('good')">😀</button>
+    <button onclick="onMoodClicked('neutral')">😳</button>
+    <button onclick="onMoodClicked('bad')">🙁</button>
+  </div>
+
+  <div style="margin-top: 10px">
+    <input id="description" type='text' placeholder="description" />
+    <button onclick="onLogMoodClicked()">Log my mood!</button>
+  </div>
+
+  <h2>Mood Log</h2>
+  <div id="moods-section">
+  </div>
+
+  <div>
+    <label>Description: </label>
+    <label id="description-label">Glad to hear a good news! </label>
+  </div>
+</body>
+
+</html>
